@@ -140,7 +140,7 @@ export default function Footer() {
       Vision
     </p>
     <p className="text-neutral-600 text-sm italic">
-      "Klinik Dr Siti & Rakan-Rakan aims to be the most accessible and preferred community medical care, committed to holistic treatments and healthcare excellence."
+      "Klinik Dr Siti & Rakan-Rakan berhasrat untuk menjadi penyedia perkhidmatan penjagaan kesihatan komuniti yang paling mudah diakses dan menjadi pilihan utama, dengan komitmen terhadap rawatan holistik serta kecemerlangan dalam penjagaan kesihatan."
     </p>
   </div>
 
@@ -149,7 +149,7 @@ export default function Footer() {
       Mission
     </p>
     <p className="text-neutral-600 text-sm italic">
-      "To provide an affordable, comprehensive and high quality healthcare service to the communities we serve."
+      "Memberikan perkhidmatan penjagaan kesihatan yang mampu milik, menyeluruh dan berkualiti tinggi kepada komuniti yang kami layani."
     </p>
   </div>
 </div>

@@ -32,6 +32,51 @@ const slugify = (value) =>
 
 const getServiceSlug = (service) => service?.slug || (service?.name ? slugify(service.name) : '')
 
+const parsePriceValue = (price) => {
+  if (!price) return null
+
+  const normalized = String(price).trim().toUpperCase()
+  if (normalized === 'PERCUMA' || normalized === 'FREE') {
+    return 0
+  }
+
+  const match = normalized.match(/[\d,.]+/)
+  if (!match) return null
+
+  return Number(match[0].replace(/,/g, ''))
+}
+
+const formatPriceValue = (value) => {
+  if (value === null || Number.isNaN(value)) return ''
+  if (value === 0) return 'PERCUMA'
+  return `RM${value}`
+}
+
+const getLowestPrice = (service) => {
+  const prices = []
+
+  if (service?.price) {
+    const value = parsePriceValue(service.price)
+    if (value !== null) prices.push(value)
+  }
+
+  service?.options?.forEach((opt) => {
+    const value = parsePriceValue(opt.price)
+    if (value !== null) prices.push(value)
+  })
+
+  service?.groups?.forEach((group) => {
+    group.items?.forEach((item) => {
+      const value = parsePriceValue(item.price)
+      if (value !== null) prices.push(value)
+    })
+  })
+
+  if (!prices.length) return ''
+
+  return formatPriceValue(Math.min(...prices))
+}
+
 const categories = [
   {
     icon: Stethoscope,
@@ -646,6 +691,7 @@ const categories = [
 
 function ServiceModal({ service, onClose }) {
   const [isLoading, setIsLoading] = useState(true)
+  const lowestPrice = getLowestPrice(service)
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 500)
@@ -720,6 +766,11 @@ function ServiceModal({ service, onClose }) {
                     <h3 className="text-lg md:text-3xl lg:text-5xl font-black text-blue-950 leading-tight">
                       {service.name}
                     </h3>
+                    {lowestPrice && (
+                      <p className="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-white/90 text-blue-900 text-[10px] md:text-xs font-black uppercase tracking-widest">
+                        Harga bermula dari {lowestPrice}
+                      </p>
+                    )}
                   </div>
                   
                   {/* CLOSE BUTTON MOBILE */}
@@ -1066,55 +1117,59 @@ export default function Services({ onModalToggle }) {
 
                 {/* Service Cards */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                  {cat.services.map((svc, index) => (
-                    <motion.button
-                      key={svc.name}
-                      id={slugify(svc.name)}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      onClick={() => handleServiceClick(svc)}
-                      className="group scroll-mt-28 text-left bg-white rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-neutral-100 hover:border-red-200 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-red-900/5 flex flex-col h-full relative"
-                    >
-                      <div className="relative h-56 md:h-64 overflow-hidden">
-                        <img 
-                          src={svc.image} 
-                          alt={svc.name} 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                          referrerPolicy="no-referrer"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-linear-to-t from-blue-950/80 via-blue-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                        
-                        {svc.isComingSoon && (
-                          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-amber-500 text-white text-[8px] md:text-[10px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg">
-                            COMING SOON
-                          </div>
-                        )}
+                  {cat.services.map((svc, index) => {
+                    const lowestPrice = getLowestPrice(svc)
 
-                        <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6">
-                          <p className="text-white/60 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">
-                            {svc.type === 'multi' ? 'Pakej Pilihan' : 'Rawatan Fokus'}
-                          </p>
-                          <h4 className="font-black text-white text-xl md:text-2xl tracking-tight group-hover:text-red-400 transition-colors leading-tight">{svc.name}</h4>
+                    return (
+                      <motion.button
+                        key={svc.name}
+                        id={slugify(svc.name)}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        onClick={() => handleServiceClick(svc)}
+                        className="group scroll-mt-28 text-left bg-white rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-neutral-100 hover:border-red-200 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-red-900/5 flex flex-col h-full relative"
+                      >
+                        <div className="relative h-56 md:h-64 overflow-hidden">
+                          <img 
+                            src={svc.image} 
+                            alt={svc.name} 
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                            referrerPolicy="no-referrer"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-linear-to-t from-blue-950/80 via-blue-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                          
+                          {svc.isComingSoon && (
+                            <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-amber-500 text-white text-[8px] md:text-[10px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg">
+                              COMING SOON
+                            </div>
+                          )}
+
+                          <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6">
+                            <p className="text-white/60 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">
+                              {svc.type === 'multi' ? 'Pakej Pilihan' : 'Rawatan Fokus'}
+                            </p>
+                            <h4 className="font-black text-white text-xl md:text-2xl tracking-tight group-hover:text-red-400 transition-colors leading-tight">{svc.name}</h4>
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div className="p-6 md:p-8 flex flex-col flex-1">
-                        <p className="text-neutral-500 text-xs md:text-sm leading-relaxed mb-6 md:mb-8 line-clamp-3 flex-1">{svc.desc}</p>
                         
-                        <div className="flex items-center justify-between mt-auto pt-4 md:pt-6 border-t border-neutral-100">
-                          <div className="flex flex-col">
-                            <span className="text-blue-900 font-black text-base md:text-lg">{svc.type === 'multi' ? svc.options[0].price : svc.type === 'grouped' ? svc.groups[0].items[0].price : svc.price}</span>
-                          </div>
-                          <div className="w-10 h-10 md:w-12 md:h-12 bg-neutral-50 rounded-xl md:rounded-2xl flex items-center justify-center text-red-600 shadow-inner group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
-                            <ArrowRight size={18} md:size={20} />
+                        <div className="p-6 md:p-8 flex flex-col flex-1">
+                          <p className="text-neutral-500 text-xs md:text-sm leading-relaxed mb-6 md:mb-8 line-clamp-3 flex-1">{svc.desc}</p>
+                          
+                          <div className="flex items-center justify-between mt-auto pt-4 md:pt-6 border-t border-neutral-100">
+                            <div className="flex flex-col">
+                              <span className="text-blue-900 font-black text-base md:text-lg">{lowestPrice}</span>
+                            </div>
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-neutral-50 rounded-xl md:rounded-2xl flex items-center justify-center text-red-600 shadow-inner group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                              <ArrowRight size={18} md:size={20} />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.button>
-                  ))}
+                      </motion.button>
+                    )
+                  })}
                 </div>
               </div>
             )
