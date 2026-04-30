@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import GlassSurface from '../components/ui/GlassSurface'
 import { getWaLink } from "../utils/whatsapp";
 
-const WA_NUMBER = '601136043101'
+const WA_NUMBER = '60103951649'
 const BOOKING_URL = 'https://klinikdrsiti.yezza.co/appointment'
 
 export default function Hero() {

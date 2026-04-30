@@ -4,7 +4,7 @@ import { Calendar, Tag, ArrowRight, Sparkles, Clock, Percent } from 'lucide-reac
 import BorderGlow from '../components/ui/BorderGlow'
 import { getWaLink } from "../utils/whatsapp";
 
-const WHATSAPP = "601136043101"
+const WHATSAPP = "60103951649"
 
 const promos = [
   {

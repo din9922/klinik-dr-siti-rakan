@@ -1,6 +1,7 @@
 const WHATSAPP_NUMBERS = {
-  main: "601136043101",
-  branch: "60123456789"
+  main: "60103951649",
+  permai: "60167296121",
+  utama: "601136043101"
 };
 
 const rateLimitMap = new Map();

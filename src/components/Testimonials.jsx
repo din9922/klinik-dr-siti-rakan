@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Star, ExternalLink } from 'lucide-react'
 
 const GOOGLE_MAPS_LINK = 'https://maps.app.goo.gl/B7tT98wH4qeywhM5A'
-const ELFSIGHT_WIDGET_ID = '07b899d9-18b4-4d4e-981b-293c41508a96'
+const ELFSIGHT_WIDGET_ID = 'ec32e5df-51e5-481c-be09-4e4dcb2a910d'
 const ELFSIGHT_SCRIPT_ID = 'elfsight-platform-script'
 const ELFSIGHT_SCRIPT_SRC = 'https://elfsightcdn.com/platform.js'
 

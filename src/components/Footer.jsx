@@ -13,7 +13,7 @@ import { getWaLink } from "../utils/whatsapp";
 const BRANCHES = [
   { 
     name: 'Puchong Permai', 
-    addr: '2, Jalan Puchong Permai 3, Taman Puchong Perdana, 47100 Puchong, Selangor', 
+    addr: '2, Jalan Puchong Permai 3, Taman Puchong Permai, 47100 Puchong, Selangor', 
     tel: '+60 16 729 6121',
   },
   { 

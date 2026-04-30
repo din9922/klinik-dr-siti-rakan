@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { MessageCircle, X } from 'lucide-react'
 import { getWaLink } from "../utils/whatsapp";
 
-const WA_NUMBER = '601136043101'
+const WA_NUMBER = '60103951649'
 const WA_URL = getWaLink(
   "Hi saya nak membuat temujanji di Klinik Dr Siti"
 );

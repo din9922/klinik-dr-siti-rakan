@@ -848,9 +848,11 @@ function ServiceModal({ service, onClose }) {
                                     )}
                                   </div>
                                   <div className="flex flex-col sm:flex-row md:flex-col items-start sm:items-center md:items-end justify-between gap-3 md:gap-4 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-neutral-100">
-                                    <div className="text-left md:text-right">
-                                      <p className="text-sm md:text-xl font-black text-blue-900">{opt.price}</p>
-                                    </div>
+                                    {opt.price ? (
+                                      <div className="text-left md:text-right">
+                                        <p className="text-sm md:text-xl font-black text-blue-900">{opt.price}</p>
+                                      </div>
+                                    ) : null}
                                     <div className="flex gap-2 w-full sm:w-auto">
                                       <a 
                                         href={getWaLink(
@@ -899,9 +901,11 @@ function ServiceModal({ service, onClose }) {
                                 )}
                               </div>
                               <div className="flex flex-col sm:flex-row md:flex-col items-start sm:items-center md:items-end justify-between gap-3 md:gap-4 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-neutral-100">
-                                <div className="text-left md:text-right">
-                                  <p className="text-sm md:text-xl font-black text-blue-900">{opt.price}</p>
-                                </div>
+                                {opt.price ? (
+                                  <div className="text-left md:text-right">
+                                    <p className="text-sm md:text-xl font-black text-blue-900">{opt.price}</p>
+                                  </div>
+                                ) : null}
                                 <div className="flex gap-2 w-full sm:w-auto">
                                   <a 
                                     href={getWaLink(
@@ -1119,6 +1123,7 @@ export default function Services({ onModalToggle }) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
                   {cat.services.map((svc, index) => {
                     const lowestPrice = getLowestPrice(svc)
+                    const hideCardPrice = svc.id === 'medical-checkup-asas'
 
                     return (
                       <motion.button
@@ -1160,7 +1165,9 @@ export default function Services({ onModalToggle }) {
                           
                           <div className="flex items-center justify-between mt-auto pt-4 md:pt-6 border-t border-neutral-100">
                             <div className="flex flex-col">
-                              <span className="text-blue-900 font-black text-base md:text-lg">{lowestPrice}</span>
+                              {lowestPrice && !hideCardPrice ? (
+                                <span className="text-blue-900 font-black text-base md:text-lg">{lowestPrice}</span>
+                              ) : null}
                             </div>
                             <div className="w-10 h-10 md:w-12 md:h-12 bg-neutral-50 rounded-xl md:rounded-2xl flex items-center justify-center text-red-600 shadow-inner group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
                               <ArrowRight size={18} md:size={20} />

@@ -1,12 +1,12 @@
 // =========================
 // 📞 WHATSAPP CONFIG
 // =========================
-const WA_NUMBER_MAIN = "601136043101";
+const WA_NUMBER_MAIN = "60103951649";
 
 const WHATSAPP_NUMBERS = {
-  main: WA_NUMBER_MAIN,       // default (jangan ubah)
+  main: WA_NUMBER_MAIN,       // default lead number
   permai: "60167296121",      // cawangan Puchong Permai
-  utama: "601136043101",      // cawangan utama (same as main)
+  utama: "601136043101",      // cawangan Puchong Utama
 };
 
 // =========================

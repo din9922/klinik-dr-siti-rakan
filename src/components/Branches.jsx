@@ -17,7 +17,7 @@ const branches = [
     id: 'permai',
     name: 'Puchong Permai',
     tagline: 'Cawangan Utama',
-    address: '2, Jalan Puchong Permai 3, Taman Puchong Perdana, 47100 Puchong, Selangor',
+    address: '2, Jalan Puchong Permai 3, Taman Puchong Permai, 47100 Puchong, Selangor',
     phone: '+603-8066 0086',
     mobile: '+6016-729 6121',
     hours: [
@@ -45,7 +45,7 @@ const branches = [
       { day: 'Sabtu', time: '9:00am – 5:00pm' },
       { day: 'Ahad', time: '10:00am - 5:00pm' }
     ],
-    thumbnail: '/klinikutama.webp',
+    thumbnail: '/klinikutama.jpg',
     mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31874.582248434464!2d101.56319571083985!3d3.0075724000000252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdb50d2456b0cf%3A0xf76c0e2c30d17952!2sKlinik%20Dr%20Siti%20dan%20Rakan%20rakan!5e0!3m2!1sen!2smy!4v1775012619200!5m2!1sen!2smy',
     mapLink: 'https://share.google.com/XYrp8bo2wIYJE1ACx',
         waLink: getWaLink(
