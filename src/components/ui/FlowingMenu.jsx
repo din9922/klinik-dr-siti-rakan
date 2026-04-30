@@ -35,6 +35,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
   const animationRef = useRef(null);
+  const contentWidthRef = useRef(0);
   const [repetitions, setRepetitions] = useState(4);
 
   const animationDefaults = { duration: 0.6, ease: 'expo' };
@@ -46,27 +47,34 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   };
 
   useEffect(() => {
-    const calculateRepetitions = () => {
-      if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
-      if (!marqueeContent) return;
-      const contentWidth = marqueeContent.offsetWidth;
+    if (!marqueeInnerRef.current) return;
+    const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
+    if (!marqueeContent) return;
+
+    const updateRepetitions = (contentWidth) => {
+      if (!contentWidth) return;
       const viewportWidth = window.innerWidth;
       const needed = Math.ceil(viewportWidth / contentWidth) + 2;
       setRepetitions(Math.max(4, needed));
     };
 
-    calculateRepetitions();
-    window.addEventListener('resize', calculateRepetitions);
-    return () => window.removeEventListener('resize', calculateRepetitions);
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      contentWidthRef.current = entry.contentRect.width;
+      updateRepetitions(entry.contentRect.width);
+    });
+
+    resizeObserver.observe(marqueeContent);
+    updateRepetitions(marqueeContent.getBoundingClientRect().width);
+
+    return () => resizeObserver.disconnect();
   }, [text, image]);
 
   useEffect(() => {
     const setupMarquee = () => {
       if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
-      if (!marqueeContent) return;
-      const contentWidth = marqueeContent.offsetWidth;
+      const contentWidth = contentWidthRef.current;
       if (contentWidth === 0) return;
 
       if (animationRef.current) {

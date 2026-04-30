@@ -42,16 +42,21 @@ export default function Navbar({ isModalOpen = false }) {
   }, [isModalOpen])
 
   useEffect(() => {
-    const handler = () => {
-      const hero = document.getElementById('home')
-      if (!hero) return
+    const hero = document.getElementById('home')
+    if (!hero || !('IntersectionObserver' in window)) return
 
-      const rect = hero.getBoundingClientRect()
-      setScrolled(rect.bottom <= 80)
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setScrolled(!entry.isIntersecting)
+      },
+      {
+        threshold: 0,
+        rootMargin: '-80px 0px 0px 0px',
+      }
+    )
 
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
+    observer.observe(hero)
+    return () => observer.disconnect()
   }, [])
 
   const scrollHome = () => {

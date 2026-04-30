@@ -65,6 +65,7 @@ const BorderGlow = ({
   fillOpacity = 0.5,
 }) => {
   const cardRef = useRef(null);
+  const rectRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [cursorAngle, setCursorAngle] = useState(45);
   const [edgeProximity, setEdgeProximity] = useState(0);
@@ -104,7 +105,7 @@ const BorderGlow = ({
   const handlePointerMove = useCallback((e) => {
     const card = cardRef.current;
     if (!card) return;
-    const rect = card.getBoundingClientRect();
+    const rect = rectRef.current || card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setEdgeProximity(getEdgeProximity(card, x, y));
@@ -149,8 +150,17 @@ const BorderGlow = ({
     <div
       ref={cardRef}
       onPointerMove={isInteractive ? handlePointerMove : undefined}
-      onPointerEnter={isInteractive ? () => setIsHovered(true) : undefined}
-      onPointerLeave={isInteractive ? () => setIsHovered(false) : undefined}
+      onPointerEnter={isInteractive ? () => {
+        const card = cardRef.current
+        if (card) {
+          rectRef.current = card.getBoundingClientRect()
+        }
+        setIsHovered(true)
+      } : undefined}
+      onPointerLeave={isInteractive ? () => {
+        rectRef.current = null
+        setIsHovered(false)
+      } : undefined}
       className={`relative grid isolate border border-white/15 ${className}`}
       style={{
         background: backgroundColor,
