@@ -113,7 +113,7 @@ export default function Trust() {
             ) : (
               <video
                 className="absolute inset-0 w-full h-full object-cover"
-                src="/video-klinik.MOV"
+                src="/video-klinik.mp4"
                 title="Kenali Klinik Kami"
                 autoPlay
                 muted
