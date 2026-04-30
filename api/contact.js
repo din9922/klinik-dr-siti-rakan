@@ -40,7 +40,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbw5lAYx75zZi3yGXO_sE7EyQGHQ3VrmJsQcSPFzNSkQAita6hxfd3S23FfMrv5MdKXddA/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwA_sUGyJYlLznORMZqItWQKq0KOZc12FG_3PcV6C9CmP18Qr75Zjk85FgG0-CObV788g/exec";
 
     const { name, phone, branch, message, token } = req.body;
 

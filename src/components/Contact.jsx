@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 
 const INITIAL_FORM = { name: '', phone: '', message: '', branch: '' }
-const SCRIPT_URL = 'https://klinik-dr-siti.vercel.app/api/contact'
+const SCRIPT_URL = 'https://www.klinikdrsitidanrakan.com/api/contact'
 const RECAPTCHA_SITE_KEY = '6LdBVL0sAAAAACDlmEWY06Ol293Vbu8EcKkhEPVh'
 const RECAPTCHA_SCRIPT_ID = 'google-recaptcha-v3-script'
 
