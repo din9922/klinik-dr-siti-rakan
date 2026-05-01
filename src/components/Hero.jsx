@@ -7,6 +7,16 @@ import { getWaLink } from "../utils/whatsapp";
 const WA_NUMBER = '60103951649'
 const BOOKING_URL = 'https://klinikdrsiti.yezza.co/appointment'
 
+const currentFrame = (index) => {
+  const num = String(index).padStart(4, '0')
+
+  if (window.innerWidth < 768) {
+    return `/frames-mobile/frame_${num}.webp`
+  }
+
+  return `/frames-desktop/frame_${num}.webp`
+}
+
 export default function Hero() {
   const sectionRef = useRef(null)
   const canvasRef = useRef(null)
@@ -25,36 +35,80 @@ export default function Hero() {
   // Frame count from user code
   const frameCount = window.innerWidth < 768 ? 252 : 305
 
-  // Preload images
+  // Preload images in idle-sized batches so the hero stays responsive.
   useEffect(() => {
+    let cancelled = false
     let loadedCount = 0
     const loadedImages = []
+    const queue = Array.from({ length: frameCount }, (_, i) => i + 1)
+    const batchSize = 8
 
-const currentFrame = (i) => {
-  let num = i.toString().padStart(4, "0")
+    const updateProgress = () => {
+      setLoadProgress(Math.floor((loadedCount / frameCount) * 100))
+      setImages([...loadedImages])
+    }
 
-  if (window.innerWidth < 768) {
-    return "/frames-mobile/frame_" + num + ".webp"
-  } else {
-    return "/frames-desktop/frame_" + num + ".webp"
-  }
-}
-
-    for (let i = 1; i <= frameCount; i++) {
+    const loadFrame = (frameIndex, isCritical = false) => {
       const img = new Image()
       img.decoding = 'async'
-      img.src = currentFrame(i)
+      img.src = currentFrame(frameIndex)
       img.onload = () => {
-        loadedCount++
-        setLoadProgress(Math.floor((loadedCount / frameCount) * 100))
-        if (loadedCount === frameCount) {
-          setImages(loadedImages)
+        if (cancelled) return
+
+        loadedImages[frameIndex - 1] = img
+        loadedCount += 1
+
+        if (isCritical) {
+          updateProgress()
           setIsLoading(false)
+          return
+        }
+
+        if (loadedCount % batchSize === 0 || loadedCount === frameCount) {
+          updateProgress()
         }
       }
-      loadedImages.push(img)
     }
-  }, [])
+
+    loadFrame(queue.shift(), true)
+
+    const scheduleNextBatch = () => {
+      if (cancelled || queue.length === 0) return
+
+      const runBatch = (deadline) => {
+        if (cancelled) return
+
+        let processed = 0
+        while (queue.length && processed < batchSize) {
+          if (deadline && typeof deadline.timeRemaining === 'function' && deadline.timeRemaining() < 8) {
+            break
+          }
+
+          const nextFrame = queue.shift()
+          if (nextFrame) {
+            loadFrame(nextFrame)
+            processed += 1
+          }
+        }
+
+        if (queue.length) {
+          scheduleNextBatch()
+        }
+      }
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(runBatch, { timeout: 2000 })
+      } else {
+        window.setTimeout(() => runBatch(null), 50)
+      }
+    }
+
+    scheduleNextBatch()
+
+    return () => {
+      cancelled = true
+    }
+  }, [frameCount])
 
   // Canvas rendering driven by scroll
   useEffect(() => {

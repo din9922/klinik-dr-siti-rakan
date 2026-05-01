@@ -2,13 +2,13 @@ import React, { Suspense, lazy, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, useParams } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import Trust from './components/Trust'
-import Branches from './components/Branches'
-import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import DeferredMount from './components/ui/DeferredMount'
 
+const About = lazy(() => import('./components/About'))
+const Trust = lazy(() => import('./components/Trust'))
+const Branches = lazy(() => import('./components/Branches'))
+const Footer = lazy(() => import('./components/Footer'))
 const Panel = lazy(() => import('./components/Panel'))
 const Testimonials = lazy(() => import('./components/Testimonials'))
 const Contact = lazy(() => import('./components/Contact'))
@@ -68,8 +68,16 @@ function MainPage() {
 
         {/* 🔥 CONTENT NORMAL (TAK GANGGU HERO) */}
         <div className="relative z-10 bg-white">
-          <About />
-          <Trust />
+          <DeferredMount minHeight={1400}>
+            <Suspense fallback={<div className="py-16 md:py-32 min-h-[1400px]" />}>
+              <About />
+            </Suspense>
+          </DeferredMount>
+          <DeferredMount minHeight={1300}>
+            <Suspense fallback={<div className="py-28 min-h-[1300px]" />}>
+              <Trust />
+            </Suspense>
+          </DeferredMount>
           <DeferredMount minHeight={900}>
             <Suspense fallback={<div className="py-28 min-h-[900px]" />}>
               <Panel />
@@ -85,7 +93,11 @@ function MainPage() {
               <LazyDoctors />
             </Suspense>
           </DeferredMount>
-          <Branches />
+          <DeferredMount minHeight={1000}>
+            <Suspense fallback={<div className="py-32 min-h-[1000px]" />}>
+              <Branches />
+            </Suspense>
+          </DeferredMount>
           <DeferredMount minHeight={680}>
             <Suspense fallback={<div className="py-32 min-h-[680px]" />}>
               <LazyPromotions />
@@ -105,7 +117,11 @@ function MainPage() {
 
       </main>
 
-      <Footer />
+      <DeferredMount minHeight={260}>
+        <Suspense fallback={<div className="min-h-[260px]" />}>
+          <Footer />
+        </Suspense>
+      </DeferredMount>
       <WhatsAppButton hide={isModalOpen} />
 
     </div>
