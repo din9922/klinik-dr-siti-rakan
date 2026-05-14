@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   MapPin,
   Phone,
@@ -12,7 +13,7 @@ import {
   Calendar
 } from 'lucide-react'
 
-const INITIAL_FORM = { name: '', phone: '', message: '', branch: '' }
+const INITIAL_FORM = { name: '', phone: '', message: '', branch: '', consent: false }
 const SCRIPT_URL = 'https://www.klinikdrsitidanrakan.com/api/contact'
 const RECAPTCHA_SITE_KEY = '6LdBVL0sAAAAACDlmEWY06Ol293Vbu8EcKkhEPVh'
 const RECAPTCHA_SCRIPT_ID = 'google-recaptcha-v3-script'
@@ -142,6 +143,7 @@ export default function Contact({ sectionId = 'contact' }) {
     if (!form.phone.trim() || !/^[0-9+\s\-]{8,15}$/.test(form.phone)) nextErrors.phone = 'Nombor telefon tidak sah'
     if (!form.message.trim() || form.message.length < 5) nextErrors.message = 'Sila kongsikan sedikit butiran pertanyaan anda'
     if (!form.branch) nextErrors.branch = 'Sila pilih cawangan pilihan anda'
+    if (!form.consent) nextErrors.consent = 'Sila beri persetujuan sebelum menghantar borang'
     return nextErrors
   }
 
@@ -388,6 +390,29 @@ export default function Contact({ sectionId = 'contact' }) {
                     }`}
                   />
                   {errors.message && <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider ml-1">{errors.message}</p>}
+                </div>
+
+                <div className="rounded-2xl border border-neutral-100 bg-neutral-50/80 p-4 md:p-5">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={form.consent}
+                      onChange={(e) => setForm({ ...form, consent: e.target.checked })}
+                      className="mt-1 h-4 w-4 rounded border-neutral-300 text-red-600 focus:ring-red-500"
+                    />
+                    <span className="text-sm text-neutral-600 leading-relaxed">
+                      I consent to the processing of my personal data in accordance with the{' '}
+                      <Link to="/privacy-policy" className="font-semibold text-red-600 hover:underline">
+                        Privacy Policy
+                      </Link>{' '}
+                      and{' '}
+                      <Link to="/pdpa-notice" className="font-semibold text-red-600 hover:underline">
+                        PDPA Notice
+                      </Link>
+                      .
+                    </span>
+                  </label>
+                  {errors.consent && <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-3 ml-7">{errors.consent}</p>}
                 </div>
 
                 <button

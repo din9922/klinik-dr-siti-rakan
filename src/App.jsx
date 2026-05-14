@@ -15,6 +15,19 @@ const Contact = lazy(() => import('./components/Contact'))
 const LazyDoctors = lazy(() => import('./components/Doctors'))
 const LazyServices = lazy(() => import('./components/Services'))
 const LazyPromotions = lazy(() => import('./components/Promotions'))
+const PrivacyPolicyPage = lazy(() => import('./components/legal/PrivacyPolicyPage'))
+const TermsAndConditionsPage = lazy(() => import('./components/legal/TermsAndConditionsPage'))
+const PDPANoticePage = lazy(() => import('./components/legal/PDPANoticePage'))
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
 
 function MainPage() {
   const { slug } = useParams()
@@ -131,13 +144,19 @@ function MainPage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/about" element={<MainPage />} />
-        <Route path="/contact" element={<MainPage />} />
-        <Route path="/services/:slug" element={<MainPage />} />
-        <Route path="/branch/:slug" element={<MainPage />} />
-      </Routes>
+      <ScrollToTop />
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/about" element={<MainPage />} />
+          <Route path="/contact" element={<MainPage />} />
+          <Route path="/services/:slug" element={<MainPage />} />
+          <Route path="/branch/:slug" element={<MainPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+          <Route path="/pdpa-notice" element={<PDPANoticePage />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

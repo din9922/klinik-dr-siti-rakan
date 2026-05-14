@@ -1,26 +1,18 @@
 import React from 'react'
-import { 
-  MapPin, 
-  Phone, 
-  Clock, 
-  MessageCircle, 
-  ArrowUpRight,
-  Heart,
-  ShieldCheck
-} from 'lucide-react'
-import { getWaLink } from "../utils/whatsapp";
+import { Link } from 'react-router-dom'
+import { MapPin, Phone, MessageCircle } from 'lucide-react'
+import { getWaLink } from '../utils/whatsapp'
 
 const BRANCHES = [
-  { 
-    name: 'Puchong Permai', 
-    addr: '2, Jalan Puchong Permai 3, Taman Puchong Permai, 47100 Puchong, Selangor', 
+  {
+    name: 'Puchong Permai',
+    addr: '2, Jalan Puchong Permai 3, Taman Puchong Permai, 47100 Puchong, Selangor',
     tel: '+60 16 729 6121',
   },
-  { 
-    name: 'Puchong Utama', 
-    addr: 'A-G-13A Block A, Dataran, Jln Puchong, Taman Puchong Utama, 47140 Puchong, Selangor', 
+  {
+    name: 'Puchong Utama',
+    addr: 'A-G-13A Block A, Dataran, Jln Puchong, Taman Puchong Utama, 47140 Puchong, Selangor',
     tel: '+60 11-3604 3101',
-    
   },
 ]
 
@@ -32,9 +24,15 @@ const QUICK_LINKS = [
   { label: 'Hubungi', href: '#contact' },
 ]
 
+const LEGAL_LINKS = [
+  { label: 'Privacy Policy', to: '/privacy-policy' },
+  { label: 'Terms & Conditions', to: '/terms-and-conditions' },
+  { label: 'PDPA Notice', to: '/pdpa-notice' },
+]
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  const waUrl = getWaLink("Hi saya nak tanya");
+  const waUrl = getWaLink('Hi saya nak tanya')
 
   return (
     <footer
@@ -44,18 +42,13 @@ export default function Footer() {
         containIntrinsicSize: '1px 900px',
       }}
     >
-
-      {/* Background Glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="hidden md:block absolute top-0 right-0 w-[600px] h-[600px] bg-red-200/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
         <div className="hidden md:block absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-100/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* TOP */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-20 pb-12 border-b border-red-100/50">
-
           <div className="flex items-center gap-5 group">
             <div className="relative shrink-0">
               <div className="absolute -inset-4 bg-red-400/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -76,83 +69,76 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 🔥 FIXED SOCIAL */}
-          {/* 🔥 UPDATED SOCIAL */}
-<div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <a
+              href="https://www.facebook.com/people/Klinik-DrSiti-Dan-RakanRakan/100014080984681/?locale=ms_MY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-red-600 transition"
+            >
+              <img
+                src="/facebook.png"
+                alt="Facebook"
+                loading="lazy"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            </a>
 
-  {/* Facebook */}
-  <a 
-    href="https://www.facebook.com/people/Klinik-DrSiti-Dan-RakanRakan/100014080984681/?locale=ms_MY" 
-    target="_blank"
-    className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-red-600 transition"
-  >
-    <img 
-      src="/facebook.png" 
-      alt="Facebook" 
-      loading="lazy"
-      className="w-full h-full object-cover rounded-2xl"
-    />
-  </a>
+            <a
+              href="https://www.instagram.com/klinikdrsitidanrakanrakan/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-red-600 transition"
+            >
+              <img
+                src="/instagram.jpg"
+                alt="Instagram"
+                loading="lazy"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            </a>
 
-  {/* Instagram */}
-  <a 
-    href="https://www.instagram.com/klinikdrsitidanrakanrakan/" 
-    target="_blank"
-    className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-red-600 transition"
-  >
-    <img 
-      src="/instagram.jpg" 
-      alt="Instagram" 
-      loading="lazy"
-      className="w-full h-full object-cover rounded-2xl"
-    />
-  </a>
-
-  {/* WhatsApp */}
-  <a 
-    href={waUrl} 
-    target="_blank"
-    className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-green-500 transition"
-  >
-    <img 
-      src="/whatsapp.png" 
-      alt="WhatsApp" 
-      loading="lazy"
-      className="w-full h-full object-cover rounded-2xl"
-    />
-  </a>
-
-</div>
-
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-11 h-11 rounded-2xl bg-white border border-red-100 flex items-center justify-center hover:bg-green-500 transition"
+            >
+              <img
+                src="/whatsapp.png"
+                alt="WhatsApp"
+                loading="lazy"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            </a>
+          </div>
         </div>
 
-        {/* GRID */}
         <div className="grid lg:grid-cols-12 gap-12 mb-20">
-          
           <div className="lg:col-span-4">
             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-300 mb-6">
               Visi & Misi
             </h3>
 
             <div className="space-y-4">
-  <div>
-    <p className="text-[10px] font-bold text-blue-900 uppercase tracking-wide">
-      Vision
-    </p>
-    <p className="text-neutral-600 text-sm italic">
-      "Klinik Dr Siti & Rakan-Rakan berhasrat untuk menjadi penyedia perkhidmatan penjagaan kesihatan komuniti yang paling mudah diakses dan menjadi pilihan utama, dengan komitmen terhadap rawatan holistik serta kecemerlangan dalam penjagaan kesihatan."
-    </p>
-  </div>
+              <div>
+                <p className="text-[10px] font-bold text-blue-900 uppercase tracking-wide">
+                  Vision
+                </p>
+                <p className="text-neutral-600 text-sm italic">
+                  "Klinik Dr Siti & Rakan-Rakan berhasrat untuk menjadi penyedia perkhidmatan penjagaan kesihatan komuniti yang paling mudah diakses dan menjadi pilihan utama, dengan komitmen terhadap rawatan holistik serta kecemerlangan dalam penjagaan kesihatan."
+                </p>
+              </div>
 
-  <div>
-    <p className="text-[10px] font-bold text-blue-900 uppercase tracking-wide">
-      Mission
-    </p>
-    <p className="text-neutral-600 text-sm italic">
-      "Memberikan perkhidmatan penjagaan kesihatan yang mampu milik, menyeluruh dan berkualiti tinggi kepada komuniti yang kami layani."
-    </p>
-  </div>
-</div>
+              <div>
+                <p className="text-[10px] font-bold text-blue-900 uppercase tracking-wide">
+                  Mission
+                </p>
+                <p className="text-neutral-600 text-sm italic">
+                  "Memberikan perkhidmatan penjagaan kesihatan yang mampu milik, menyeluruh dan berkualiti tinggi kepada komuniti yang kami layani."
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-5">
@@ -179,90 +165,100 @@ export default function Footer() {
             </div>
           </div>
 
-<div className="lg:col-span-3 flex flex-col">
-  <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-300 mb-6">
-    Waktu Operasi
-  </h3>
+          <div className="lg:col-span-3 flex flex-col">
+            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-red-300 mb-6">
+              Waktu Operasi
+            </h3>
 
-  {/* PERMAI */}
-  <div className="mb-5 space-y-1">
-    <h4 className="font-black text-sm text-blue-950 mb-1">
-      Cawangan Puchong Permai
-    </h4>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Isnin – Jumaat</span>
-      <span>8:30am – 10pm</span>
-    </p>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Sabtu</span>
-      <span>9:00am – 5pm</span>
-    </p>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Ahad</span>
-      <span>12:00pm – 10pm</span>
-    </p>
-  </div>
+            <div className="mb-5 space-y-1">
+              <h4 className="font-black text-sm text-blue-950 mb-1">
+                Cawangan Puchong Permai
+              </h4>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Isnin - Jumaat</span>
+                <span>8:30am - 10pm</span>
+              </p>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Sabtu</span>
+                <span>9:00am - 5pm</span>
+              </p>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Ahad</span>
+                <span>12:00pm - 10pm</span>
+              </p>
+            </div>
 
-  {/* UTAMA */}
-  <div className="mb-6 space-y-1">
-    <h4 className="font-black text-sm text-blue-950 mb-1">
-      Cawangan Puchong Utama
-    </h4>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Isnin – Jumaat</span>
-      <span>8:30am – 9pm</span>
-    </p>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Sabtu</span>
-      <span>9:00am – 5pm</span>
-    </p>
-    <p className="text-sm text-neutral-600 flex italic justify-between">
-      <span>Ahad</span>
-      <span>10:00am – 5pm</span>
-    </p>
-  </div>
+            <div className="mb-6 space-y-1">
+              <h4 className="font-black text-sm text-blue-950 mb-1">
+                Cawangan Puchong Utama
+              </h4>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Isnin - Jumaat</span>
+                <span>8:30am - 9pm</span>
+              </p>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Sabtu</span>
+                <span>9:00am - 5pm</span>
+              </p>
+              <p className="text-sm text-neutral-600 flex italic justify-between">
+                <span>Ahad</span>
+                <span>10:00am - 5pm</span>
+              </p>
+            </div>
 
-  {/* BUTTON */}
-  <a 
-    href={waUrl} 
-    target="_blank" 
-    className="mt-auto w-full py-3 bg-blue-900 hover:bg-blue-800 text-white rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-all"
-  >
-    <MessageCircle size={14} />
-    Hubungi Kami
-  </a>
-</div>
-
-        </div>
-
-        {/* BOTTOM */}
-        <div className="pt-10 border-t border-red-100 flex flex-col md:flex-row md:justify-between items-center gap-6 lg:relative">
-
-          <div className="flex flex-wrap gap-6">
-            {QUICK_LINKS.map((l, i) => (
-              <a key={i} href={l.href} className="text-xs font-black text-neutral-400 hover:text-red-600">
-                {l.label}
-              </a>
-            ))}
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto w-full py-3 bg-blue-900 hover:bg-blue-800 text-white rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-all"
+            >
+              <MessageCircle size={14} />
+              Hubungi Kami
+            </a>
           </div>
-
-          <p className="text-neutral-400 text-xs">
-            © {currentYear} Klinik Dr Siti dan Rakan Rakan. All rights reserved.
-          </p>
-
-          <a 
-  href="https://www.luxera.my" 
-  target="_blank"
-  className="text-neutral-400 text-xs font-medium tracking-wide hover:opacity-80 transition lg:absolute lg:left-[45%]"
->
-  Powered by{' '}
-  <span className="font-bold bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-transparent">
-    Luxera Cognitive Resources
-  </span>
-</a>
-
         </div>
 
+        <div className="pt-10 border-t border-red-100 flex flex-col gap-6 lg:relative">
+          <nav
+            aria-label="Legal links"
+            className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-neutral-500"
+          >
+            {LEGAL_LINKS.map((link, index) => (
+              <React.Fragment key={link.to}>
+                <Link to={link.to} className="hover:text-red-600 transition-colors">
+                  {link.label}
+                </Link>
+                {index < LEGAL_LINKS.length - 1 && <span className="text-neutral-300">|</span>}
+              </React.Fragment>
+            ))}
+          </nav>
+
+          <div className="flex flex-col md:flex-row md:justify-between items-center gap-6 lg:relative">
+            <div className="flex flex-wrap gap-6">
+              {QUICK_LINKS.map((l, i) => (
+                <a key={i} href={l.href} className="text-xs font-black text-neutral-400 hover:text-red-600">
+                  {l.label}
+                </a>
+              ))}
+            </div>
+
+            <p className="text-neutral-400 text-xs">
+              © {currentYear} Klinik Dr Siti dan Rakan Rakan. All rights reserved.
+            </p>
+
+            <a
+              href="https://www.luxera.my"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-400 text-xs font-medium tracking-wide hover:opacity-80 transition lg:absolute lg:left-[45%]"
+            >
+              Powered by{' '}
+              <span className="font-bold bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-transparent">
+                Luxera Cognitive Resources
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   )

@@ -16,6 +16,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.klinikdrsitidanrakan.com/privacy-policy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.klinikdrsitidanrakan.com/terms-and-conditions</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.klinikdrsitidanrakan.com/pdpa-notice</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://www.klinikdrsitidanrakan.com/services/perubatan-am-core</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
