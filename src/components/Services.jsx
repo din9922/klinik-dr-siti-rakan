@@ -1074,7 +1074,7 @@ export default function Services({ onModalToggle }) {
       clearTimeout(openTimerRef.current)
     }
     setSelected(null)
-    navigate('/', { replace: true })
+    navigate('/', { replace: true, state: { preserveScroll: true } })
   }
 
   return (

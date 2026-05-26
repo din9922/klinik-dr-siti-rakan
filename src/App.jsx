@@ -20,11 +20,12 @@ const TermsAndConditionsPage = lazy(() => import('./components/legal/TermsAndCon
 const PDPANoticePage = lazy(() => import('./components/legal/PDPANoticePage'))
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
 
   useEffect(() => {
+    if (state?.preserveScroll) return
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, state])
 
   return null
 }
